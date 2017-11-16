@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="BuonaNotte.jnlp">
+  <information>
+    <title>BuonaNotte</title>
+    <vendor>archer</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="BuonaNotte.jar" size="15885" download="eager" />
+    <jar href="lib/postgresql-42.1.4.jar" size="713037" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="BuonaNotte" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="buonanotte.BuonaNotte"  name="BuonaNotte" />
+  <update check="always"/>
+</jnlp>
