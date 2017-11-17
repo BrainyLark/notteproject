@@ -54,7 +54,7 @@ public class DatabaseAdapter implements ContentProvider {
     public ResultSet query(String table, String projections, String where) {
         try {
             String qry = "SELECT " + projections + " FROM " + table + " WHERE " + where;
-            stmt = this.conn.createStatement();
+            stmt = conn.createStatement();
             return stmt.executeQuery(qry);
         } catch (SQLException ex) {
             System.out.println("Error occured while querying data: " + ex.getMessage());

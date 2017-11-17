@@ -23,19 +23,31 @@ public class BuonaNotte extends Application {
     
     private DatabaseAdapter adapter;
     private Stage privateStage;
+    private String currentUser;
     
     @Override
     public void start(Stage stage) throws SQLException, IOException {
+        adapter = new DatabaseAdapter();
+        currentUser = null;
+        
         this.privateStage = stage;
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(BuonaNotte.class.getResource("view/Login.fxml"));
         AnchorPane root = (AnchorPane) loader.load();
         
-        LoginController controller = new LoginController();
+        LoginController controller = loader.getController();
         controller.setMainApp(this);
         
         privateStage.setScene(new Scene(root));
         privateStage.show();
+    }
+    
+    public void setUser(String username) {
+        this.currentUser = username;
+    }
+    
+    public DatabaseAdapter getAdapder() {
+        return this.adapter;
     }
 
     /**
