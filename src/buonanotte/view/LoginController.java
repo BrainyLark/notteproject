@@ -6,14 +6,10 @@
 package buonanotte.view;
 
 import buonanotte.BuonaNotte;
-import buonanotte.provider.DatabaseAdapter;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
