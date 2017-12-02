@@ -5,11 +5,7 @@
  */
 package buonanotte.provider;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  *
@@ -19,13 +15,13 @@ public class DatabaseAdapter implements ContentProvider {
     
     private Connection conn = null;
     private Statement stmt = null;
-    private final String prefix = "jdbc:postgresql://";
+    private final String prefix = "jdbc:mysql://";
     private final String hostname = "localhost";
     private final String port = "5432";
-    private final String dbname = "notte";
-    private final String username = "postgres";
-    private final String password = "1234";
-    private final String driver = "org.postgresql.Driver";
+    private final String dbname = "hotel_sys";
+    private final String username = "root";
+    private final String password = "root";
+    private final String driver = "com.mysql.jdbc.Driver";
     
     private final String INSERTION_VALUES_GUEST = "registerId, fullname, cardnumber, country";
     private final String INSERTION_VALUES_ORDER = "checkin, checkout, totalbill, roomid, guestid";
@@ -34,8 +30,8 @@ public class DatabaseAdapter implements ContentProvider {
     public DatabaseAdapter() {
         try {
             Class.forName(driver);
-            conn = DriverManager.getConnection(prefix + hostname + ":" + port + "/" + dbname, username, password);
-            System.out.println("Database connected successfully!");
+            conn = DriverManager.getConnection(prefix + hostname + "/" + dbname, username, password);
+            //System.out.println("Database connected successfully!");
         } catch (ClassNotFoundException | SQLException ex) {
             System.out.println("Exception has been occured: " + ex.getMessage());
         }
@@ -54,6 +50,7 @@ public class DatabaseAdapter implements ContentProvider {
     public ResultSet query(String table, String projections, String where) {
         try {
             String qry = "SELECT " + projections + " FROM " + table + " WHERE " + where;
+            System.out.println(qry);
             stmt = conn.createStatement();
             return stmt.executeQuery(qry);
         } catch (SQLException ex) {
