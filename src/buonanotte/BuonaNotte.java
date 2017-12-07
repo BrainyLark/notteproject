@@ -1,9 +1,16 @@
 package buonanotte;
 
 import buonanotte.model.Room;
+<<<<<<< HEAD
 import buonanotte.model.RoomType;
 import buonanotte.provider.DatabaseAdapter;
 import buonanotte.view.AdminController;
+=======
+import buonanotte.provider.DatabaseAdapter;
+import buonanotte.view.LoginController;
+import buonanotte.view.OrderController;
+import buonanotte.view.RoomsInfoController;
+>>>>>>> 0c5dee2cbd4aaa32c225f62d59c08e3d24c068b9
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,6 +21,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class BuonaNotte extends Application {
@@ -31,9 +39,10 @@ public class BuonaNotte extends Application {
         adapter = new DatabaseAdapter();
         setRoomData();
         currentUser = null;
-        
         this.privateStage = stage;
+        this.privateStage.setTitle("testing");
         FXMLLoader loader = new FXMLLoader();
+<<<<<<< HEAD
         
         loader.setLocation(BuonaNotte.class.getResource("view/Admin.fxml"));
         AnchorPane root = (AnchorPane) loader.load();
@@ -41,9 +50,16 @@ public class BuonaNotte extends Application {
         adminController = loader.getController();
         adminController.setMainApp(this);
         
+=======
+        loader.setLocation(BuonaNotte.class.getResource("view/RoomsInfo.fxml"));
+        AnchorPane root = (AnchorPane) loader.load();
+        RoomsInfoController controller = loader.getController();
+        controller.setMainApp(this);
+>>>>>>> 0c5dee2cbd4aaa32c225f62d59c08e3d24c068b9
         privateStage.setScene(new Scene(root));
         privateStage.setTitle("Hotel Project");
         privateStage.show();
+        //showOrderDialog(1);
     }
     
     public void setUser(String username) {
@@ -88,6 +104,29 @@ public class BuonaNotte extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+    public boolean showOrderDialog(int roomNumber) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(BuonaNotte.class.getResource("view/Order.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Room order");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(privateStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            OrderController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setDialogStage(dialogStage);
+            controller.setRoom(roomNumber);
+            dialogStage.showAndWait();
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
     
 }
