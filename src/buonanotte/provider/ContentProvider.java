@@ -12,8 +12,13 @@ import java.sql.ResultSet;
  * @author archer
  */
 public interface ContentProvider {
+
     public ResultSet query(String table, String projections, String where);
+
     public boolean insert(String table, String args);
+
     public boolean delete(String table, String where);
+
     public boolean update(String table, String where, String set);
+
 }

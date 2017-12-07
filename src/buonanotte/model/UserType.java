@@ -35,6 +35,4 @@ public class UserType {
         this.type = type;
     }
     
-    
-    
 }
