@@ -1,16 +1,13 @@
 package buonanotte;
 
 import buonanotte.model.Room;
-<<<<<<< HEAD
 import buonanotte.model.RoomType;
 import buonanotte.provider.DatabaseAdapter;
 import buonanotte.view.AdminController;
-=======
 import buonanotte.provider.DatabaseAdapter;
 import buonanotte.view.LoginController;
 import buonanotte.view.OrderController;
 import buonanotte.view.RoomsInfoController;
->>>>>>> 0c5dee2cbd4aaa32c225f62d59c08e3d24c068b9
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,7 +39,6 @@ public class BuonaNotte extends Application {
         this.privateStage = stage;
         this.privateStage.setTitle("testing");
         FXMLLoader loader = new FXMLLoader();
-<<<<<<< HEAD
         
         loader.setLocation(BuonaNotte.class.getResource("view/Admin.fxml"));
         AnchorPane root = (AnchorPane) loader.load();
@@ -50,12 +46,6 @@ public class BuonaNotte extends Application {
         adminController = loader.getController();
         adminController.setMainApp(this);
         
-=======
-        loader.setLocation(BuonaNotte.class.getResource("view/RoomsInfo.fxml"));
-        AnchorPane root = (AnchorPane) loader.load();
-        RoomsInfoController controller = loader.getController();
-        controller.setMainApp(this);
->>>>>>> 0c5dee2cbd4aaa32c225f62d59c08e3d24c068b9
         privateStage.setScene(new Scene(root));
         privateStage.setTitle("Hotel Project");
         privateStage.show();
@@ -127,6 +117,12 @@ public class BuonaNotte extends Application {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public void resetRoomAndRoomTypesCollection() {
+        roomTypes.clear();
+        roomData.clear();
+        setRoomData();
     }
     
 }

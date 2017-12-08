@@ -15,23 +15,24 @@ public class DatabaseAdapter implements ContentProvider {
     
     private Connection conn = null;
     private Statement stmt = null;
-    private final String prefix = "jdbc:mysql://";
+    private final String prefix = "jdbc:postgresql://";
     private final String hostname = "localhost";
     private final String port = "5432";
-    private final String dbname = "hotel_sys";
-    private final String username = "root";
-    private final String password = "root";
-    private final String driver = "com.mysql.jdbc.Driver";
+    private final String dbname = "notte";
+    private final String username = "postgres";
+    private final String password = "1234";
+    private final String driver = "org.postgresql.Driver";
     
     private final String INSERTION_VALUES_GUEST = "registerId, fullname, cardnumber, country";
     private final String INSERTION_VALUES_ORDER = "checkin, checkout, totalbill, roomid, guestid";
-    private final String INSERTION_VALUES_ROOM = "typeid";
+    private final String INSERTION_VALUES_ROOM = "roomno, typeid";
+    private final String INSERTION_VALUES_ROOMTYPE = "roomtype, price";
     
     public DatabaseAdapter() {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(prefix + hostname + "/" + dbname, username, password);
-            //System.out.println("Database connected successfully!");
+            System.out.println("Database connected successfully!");
         } catch (ClassNotFoundException | SQLException ex) {
             System.out.println("Exception has been occured: " + ex.getMessage());
         }
@@ -75,11 +76,14 @@ public class DatabaseAdapter implements ContentProvider {
             case "rooms":
                 qry = qryPrefix + INSERTION_VALUES_ROOM + qryPostfix;
                 break;
+            case "roomtypes":
+                qry = qryPrefix + INSERTION_VALUES_ROOMTYPE + qryPostfix;
         }
         
         try {
+            System.out.println(qry);
             stmt = this.conn.createStatement();
-            return (stmt.executeUpdate(qry) > 0) ? true : false;
+            return (stmt.executeUpdate(qry) > 0);
         } catch (SQLException ex) {
             System.out.println("Exception occured during insertion operation: " + ex.getMessage());
         }

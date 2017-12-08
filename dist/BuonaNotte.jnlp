@@ -8,13 +8,9 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-<<<<<<< HEAD
-    <jar href="BuonaNotte.jar" size="45602" download="eager" />
-    <jar href="lib/postgresql-42.1.4.jar" size="713037" download="eager" />
-=======
-    <jar href="BuonaNotte.jar" size="34356" download="eager" />
+    <jar href="BuonaNotte.jar" size="58880" download="eager" />
     <jar href="lib/mysql-connector-java-5.0.8-bin.jar" size="540852" download="eager" />
->>>>>>> 0c5dee2cbd4aaa32c225f62d59c08e3d24c068b9
+    <jar href="lib/postgresql-42.1.4.jar" size="713037" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="BuonaNotte" >
     <param name="requiredFXVersion" value="8.0+"/>

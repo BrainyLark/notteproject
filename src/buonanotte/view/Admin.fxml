@@ -153,9 +153,9 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button mnemonicParsing="false" text="Засварлах..." />
-                              <Button mnemonicParsing="false" text="Төрөл устгах..." GridPane.columnIndex="2" />
-                              <Button mnemonicParsing="false" text="Шинэ төрөл..." GridPane.columnIndex="1" />
+                              <Button fx:id="typeUpdateBtn" mnemonicParsing="false" text="Засварлах..." />
+                              <Button fx:id="typeDeleteBtn" mnemonicParsing="false" text="Төрөл устгах..." GridPane.columnIndex="2" />
+                              <Button fx:id="typeCreateBtn" mnemonicParsing="false" text="Шинэ төрөл..." GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                      </children>
