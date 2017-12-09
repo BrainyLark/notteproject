@@ -2,22 +2,21 @@ package buonanotte;
 
 import buonanotte.model.Room;
 import buonanotte.model.RoomType;
-import buonanotte.provider.DatabaseAdapter;
 import buonanotte.view.AdminController;
 import buonanotte.provider.DatabaseAdapter;
-import buonanotte.view.LoginController;
 import buonanotte.view.OrderController;
-import buonanotte.view.RoomsInfoController;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -25,6 +24,7 @@ public class BuonaNotte extends Application {
     
     private DatabaseAdapter adapter;
     private Stage privateStage;
+    private BorderPane rootLayout;
     private String currentUser;
     private AdminController adminController;
     
@@ -38,17 +38,19 @@ public class BuonaNotte extends Application {
         currentUser = null;
         this.privateStage = stage;
         this.privateStage.setTitle("testing");
+        
+        initRootLayout();
+        
         FXMLLoader loader = new FXMLLoader();
         
         loader.setLocation(BuonaNotte.class.getResource("view/Admin.fxml"));
         AnchorPane root = (AnchorPane) loader.load();
         
+        rootLayout.setCenter(root);
+        
         adminController = loader.getController();
         adminController.setMainApp(this);
-        
-        privateStage.setScene(new Scene(root));
-        privateStage.setTitle("Hotel Project");
-        privateStage.show();
+
         //showOrderDialog(1);
     }
     
@@ -116,6 +118,19 @@ public class BuonaNotte extends Application {
         } catch (IOException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+    
+    public void initRootLayout() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(BuonaNotte.class.getResource("view/RootLayout.fxml"));
+            rootLayout = (BorderPane) loader.load();
+            Scene scene = new Scene(rootLayout);
+            privateStage.setScene(scene);
+            privateStage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(BuonaNotte.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

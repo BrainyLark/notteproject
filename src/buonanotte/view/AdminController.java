@@ -163,7 +163,7 @@ public class AdminController implements Initializable {
         });
 
         typeCreateBtn.setOnAction((e) -> {
-            createType(1);
+            //createType(1);
         });
     }
 
