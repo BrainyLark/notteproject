@@ -134,6 +134,10 @@ public class AdminController implements Initializable {
         typeTable.setItems(mainapp.getRoomTypes());
         initTree();
     }
+    
+    public BuonaNotte getMainApp() {
+        return mainapp;
+    }
 
     public void initTable() {
         typeIdColumn.setCellValueFactory(celldata -> celldata.getValue().idProperty());

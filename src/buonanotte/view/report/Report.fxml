@@ -6,22 +6,22 @@
 
 <TabPane prefHeight="720.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="buonanotte.view.report.ReportController">
   <tabs>
-    <Tab text="Өрөө ашиглалтын тайлан">
+    <Tab fx:id="roomUseTab" text="Өрөө ашиглалтын тайлан">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
       </content>
     </Tab>
-    <Tab text="Орлогын тайлан">
+    <Tab fx:id="incomeUseTab" text="Орлогын тайлан">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
       </content>
     </Tab>
-      <Tab text="Нийт өрөөний тайлан">
+      <Tab fx:id="totalRoomTab" text="Нийт өрөөний тайлан">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
          </content>
       </Tab>
-      <Tab text="Хэрэглэгчдийн статистик">
+      <Tab fx:id="userDataTab" text="Хэрэглэгчдийн статистик">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
          </content>

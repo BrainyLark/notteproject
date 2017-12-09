@@ -5,6 +5,7 @@ import buonanotte.model.RoomType;
 import buonanotte.view.AdminController;
 import buonanotte.provider.DatabaseAdapter;
 import buonanotte.view.OrderController;
+import buonanotte.view.RootLayoutController;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,6 +26,7 @@ public class BuonaNotte extends Application {
     private DatabaseAdapter adapter;
     private Stage privateStage;
     private BorderPane rootLayout;
+    private RootLayoutController rootController;
     private String currentUser;
     private AdminController adminController;
     
@@ -37,7 +39,7 @@ public class BuonaNotte extends Application {
         setRoomData();
         currentUser = null;
         this.privateStage = stage;
-        this.privateStage.setTitle("testing");
+        this.privateStage.setTitle("Admin Control Section");
         
         initRootLayout();
         
@@ -50,8 +52,6 @@ public class BuonaNotte extends Application {
         
         adminController = loader.getController();
         adminController.setMainApp(this);
-
-        //showOrderDialog(1);
     }
     
     public void setUser(String username) {
@@ -116,7 +116,7 @@ public class BuonaNotte extends Application {
             dialogStage.showAndWait();
             return controller.isOkClicked();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return false;
         }
     }
@@ -126,6 +126,8 @@ public class BuonaNotte extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(BuonaNotte.class.getResource("view/RootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
+            rootController = loader.getController();
+            rootController.setMainApp(this);
             Scene scene = new Scene(rootLayout);
             privateStage.setScene(scene);
             privateStage.show();
