@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package buonanotte.view.report;
 
 import buonanotte.BuonaNotte;
@@ -28,6 +23,7 @@ public class ReportController implements Initializable {
 
     private BuonaNotte mainapp;
     private RoomUsageChartController roomUsageController;
+    private IncomeUsageChartController incomeController;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -35,15 +31,23 @@ public class ReportController implements Initializable {
     }
 
     public void initTabs() {
-        roomUseTab.setContent(readFxmlLayout("RoomUsageChart.fxml"));
+        roomUseTab.setContent(readFxmlLayout("RoomUsageChart.fxml", 1));
+        incomeUseTab.setContent(readFxmlLayout("IncomeUsageChart.fxml", 2));
     }
     
-    public AnchorPane readFxmlLayout(String fxmlName) {
+    public AnchorPane readFxmlLayout(String fxmlName, int tabNo) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(fxmlName));
             AnchorPane pane = (AnchorPane) loader.load();
-            roomUsageController = loader.getController();
+            switch(tabNo) {
+                case 1:
+                    roomUsageController = loader.getController();
+                    break;
+                case 2:
+                    incomeController = loader.getController();
+                    break;
+            }
             return pane;
         } catch (IOException ex) {
             System.out.println("Error at reading fxml layout: " + ex.getMessage());
@@ -58,6 +62,7 @@ public class ReportController implements Initializable {
     public void setMainApp(BuonaNotte app) {
         mainapp = app;
         roomUsageController.setMainApp(mainapp);
+        incomeController.setMainApp(mainapp);
     }
     
 }
