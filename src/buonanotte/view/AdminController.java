@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,11 +21,13 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.GridPane;
@@ -163,7 +166,7 @@ public class AdminController implements Initializable {
         });
 
         updateBtn.setOnAction((e) -> {
-            //createRoom(2);
+            updateRoom();
         });
 
         typeCreateBtn.setOnAction((e) -> {
@@ -172,6 +175,10 @@ public class AdminController implements Initializable {
         
         typeDeleteBtn.setOnAction((e) -> {
             deleteType();
+        });
+        
+        typeUpdateBtn.setOnAction((e) -> {
+            updateType();
         });
     }
 
@@ -209,6 +216,24 @@ public class AdminController implements Initializable {
                 mainapp.resetRoomAndRoomTypesCollection();
                 initTree();
                 showAlert(AlertType.CONFIRMATION, "Баталгаажуулалт", "Үйлдэл амжилттай хийгдлээ");
+            } else {
+                showAlert(AlertType.ERROR, "Алдаа", "Өрөө үүсгэхэд алдаа гарлаа. Буруу өгөгдөл оруулсан байна. Өгөгдлөө нягтлаад дахин оролдоно уу.");
+            }
+        });
+    }
+    
+    private void updateRoom() {
+        ChoiceDialog<String> dialog = new ChoiceDialog("Сонгох...", mainapp.getRoomTypes().stream().map(rt -> rt.getType()).collect(Collectors.toList()));
+        dialog.setTitle("Өрөөний төрөл өөрчлөх");
+        dialog.setHeaderText(currentRoomNo + " өрөөний төрлийг өөрчлөх диалог");
+        dialog.setContentText("Сонгоно уу:");
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(typeStr -> {
+            int newTypeId = mainapp.getRoomTypes().stream().filter(e -> e.getType().equals(typeStr)).findFirst().get().getId();
+            if(mainapp.getAdapder().update("rooms", "roomno=" + currentRoomNo, "typeid=" + newTypeId)) {
+                showAlert(AlertType.CONFIRMATION, "Баталгаажуулалт", "Үйлдэл амжилттай хийгдлээ");
+                mainapp.resetRoomAndRoomTypesCollection();
+                initTree();
             } else {
                 showAlert(AlertType.ERROR, "Алдаа", "Өрөө үүсгэхэд алдаа гарлаа. Буруу өгөгдөл оруулсан байна. Өгөгдлөө нягтлаад дахин оролдоно уу.");
             }
@@ -271,6 +296,24 @@ public class AdminController implements Initializable {
         } else {
             showAlert(AlertType.ERROR, "Алдаа", "Төрөл устгагдахад алдаа гарлаа");
         }
+    }
+    
+    public void updateType() {
+        RoomType selected = typeTable.getSelectionModel().getSelectedItem();
+        TextInputDialog dialog = new TextInputDialog(String.valueOf(selected.getPrice()));
+        dialog.setTitle("Төрөл өөрчлөх");
+        dialog.setHeaderText(selected.getId() + " дугаартай төрлийн үнийг өөрчлөх диалог");
+        dialog.setContentText("Шинэ үнэ оруулна уу:");
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(price -> {
+            double updated = Double.valueOf(price);
+            if(mainapp.getAdapder().update("roomtypes", "id=" + selected.getId(), "price=" + updated)) {
+                mainapp.getRoomTypes().stream().filter(type -> type.getId() == selected.getId()).findFirst().get().setPrice(updated);
+                showAlert(AlertType.CONFIRMATION, "Баталгаажуулалт", "Төрлийн үнэ амжилттай өөрчлөгдсөн!");
+            } else {
+                showAlert(AlertType.ERROR, "Алдаа", "Төрөл өөрчлөхөд алдаа гарлаа");
+            }
+        });
     }
 
 }
