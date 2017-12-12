@@ -88,7 +88,7 @@ public class IncomeUsageChartController implements Initializable {
             try {
                 while(rs.next()) {
                     bill = rs.getDouble("bill");
-                    pieChartData.add(new PieChart.Data("Room " + rs.getInt("id"), + bill));
+                    pieChartData.add(new PieChart.Data("Room " + rs.getInt("id"), bill));
                     totalincome += bill;
                     totalorder += rs.getInt("cnt");
                 }

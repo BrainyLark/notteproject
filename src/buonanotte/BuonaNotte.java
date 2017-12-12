@@ -1,5 +1,6 @@
 package buonanotte;
 
+import buonanotte.model.Guest;
 import buonanotte.model.Room;
 import buonanotte.model.RoomType;
 import buonanotte.view.AdminController;
@@ -32,11 +33,13 @@ public class BuonaNotte extends Application {
     
     private ObservableList<RoomType> roomTypes = FXCollections.observableArrayList();
     private ObservableList<Room> roomData = FXCollections.observableArrayList();
+    private ObservableList<Guest> guestData = FXCollections.observableArrayList();
     
     @Override
     public void start(Stage stage) throws SQLException, IOException {
         adapter = new DatabaseAdapter();
         setRoomData();
+        setGuestData();
         currentUser = null;
         this.privateStage = stage;
         this.privateStage.setTitle("Admin Control Section");
@@ -86,12 +89,28 @@ public class BuonaNotte extends Application {
         }
     }
     
+    public void setGuestData() {
+        ResultSet rs = adapter.query("guests", "*", "true");
+        try {
+            while(rs.next()) {
+                guestData.add(new Guest(rs.getInt("id"), rs.getString("fullname"), rs.getString("registerid"), rs.getString("cardnumber"), rs.getString("country")));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            System.out.println("Error occured while retrieving guest data: " + ex.getMessage());
+        }
+    }
+    
     public ObservableList<Room> getRoomData() {
         return this.roomData;
     }
     
     public ObservableList<RoomType> getRoomTypes() {
         return this.roomTypes;
+    }
+    
+    public ObservableList<Guest> getGuestData() {
+        return this.guestData;
     }
 
     public static void main(String[] args) {

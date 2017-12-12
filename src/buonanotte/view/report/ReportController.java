@@ -24,6 +24,8 @@ public class ReportController implements Initializable {
     private BuonaNotte mainapp;
     private RoomUsageChartController roomUsageController;
     private IncomeUsageChartController incomeController;
+    private GuestDataChartController guestDataController;
+    public static String[] months = new String[]{"Нэг", "Хоёр", "Гурав", "Дөрөв", "Тав", "Зургаа", "Долоо", "Найм", "Ес", "Арав", "Арваннэг", "Арванхоёр"};
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -33,6 +35,7 @@ public class ReportController implements Initializable {
     public void initTabs() {
         roomUseTab.setContent(readFxmlLayout("RoomUsageChart.fxml", 1));
         incomeUseTab.setContent(readFxmlLayout("IncomeUsageChart.fxml", 2));
+        userDataTab.setContent(readFxmlLayout("GuestDataChart.fxml", 3));
     }
     
     public AnchorPane readFxmlLayout(String fxmlName, int tabNo) {
@@ -47,6 +50,8 @@ public class ReportController implements Initializable {
                 case 2:
                     incomeController = loader.getController();
                     break;
+                case 3:
+                    guestDataController = loader.getController();
             }
             return pane;
         } catch (IOException ex) {
@@ -63,6 +68,7 @@ public class ReportController implements Initializable {
         mainapp = app;
         roomUsageController.setMainApp(mainapp);
         incomeController.setMainApp(mainapp);
+        guestDataController.setMainApp(mainapp);
     }
     
 }

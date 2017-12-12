@@ -167,7 +167,11 @@ public class AdminController implements Initializable {
         });
 
         typeCreateBtn.setOnAction((e) -> {
-            //createType(1);
+            createType();
+        });
+        
+        typeDeleteBtn.setOnAction((e) -> {
+            deleteType();
         });
     }
 
@@ -246,18 +250,27 @@ public class AdminController implements Initializable {
         return result;
     }
 
-    public void createType(int ACTION_STATE) {
+    public void createType() {
         Optional<Pair<String, String>> result = createCustomDialog("Төрөл үүсгэх", "Төрөл үүсгэх зориулалттай булан", "Төрлийн нэр:", "Төрлийн үнэ");
 
         result.ifPresent(type -> {
             if (mainapp.getAdapder().insert("roomtypes", "'" + type.getKey() + "', " + type.getValue())) {
                 mainapp.resetRoomAndRoomTypesCollection();
-                initTree();
                 showAlert(AlertType.CONFIRMATION, "Баталгаажуулалт", "Үйлдэл амжилттай хийгдлээ");
             } else {
                 showAlert(AlertType.ERROR, "Алдаа", "Үйлдэл амжилтгүй боллоо");
             }
         });
+    }
+    
+    public void deleteType() {
+        int selectedType = typeTable.getSelectionModel().getSelectedItem().getId();
+        if(mainapp.getAdapder().delete("roomtypes", "id = " + selectedType)) {
+            mainapp.getRoomTypes().removeIf(e -> e.getId() == selectedType);
+            showAlert(AlertType.CONFIRMATION, "Баталгаажуулалт", "Төрөл амжилттай устгагдлаа");
+        } else {
+            showAlert(AlertType.ERROR, "Алдаа", "Төрөл устгагдахад алдаа гарлаа");
+        }
     }
 
 }
