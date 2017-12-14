@@ -114,4 +114,8 @@ public class DatabaseAdapter implements ContentProvider {
         return false;
     }
     
+    public Connection getConnection() {
+        return this.conn;
+    }
+    
 }

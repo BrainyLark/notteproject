@@ -25,6 +25,7 @@ public class ReportController implements Initializable {
     private RoomUsageChartController roomUsageController;
     private IncomeUsageChartController incomeController;
     private GuestDataChartController guestDataController;
+    private RoomsReportController roomsReportController;
     public static String[] months = new String[]{"Нэг", "Хоёр", "Гурав", "Дөрөв", "Тав", "Зургаа", "Долоо", "Найм", "Ес", "Арав", "Арваннэг", "Арванхоёр"};
 
     @Override
@@ -36,6 +37,7 @@ public class ReportController implements Initializable {
         roomUseTab.setContent(readFxmlLayout("RoomUsageChart.fxml", 1));
         incomeUseTab.setContent(readFxmlLayout("IncomeUsageChart.fxml", 2));
         userDataTab.setContent(readFxmlLayout("GuestDataChart.fxml", 3));
+        totalRoomTab.setContent(readFxmlLayout("RoomsReport.fxml", 4));
     }
     
     public AnchorPane readFxmlLayout(String fxmlName, int tabNo) {
@@ -52,6 +54,10 @@ public class ReportController implements Initializable {
                     break;
                 case 3:
                     guestDataController = loader.getController();
+                    break;
+                case 4:
+                    roomsReportController = loader.getController();
+                    break;
             }
             return pane;
         } catch (IOException ex) {
@@ -69,6 +75,7 @@ public class ReportController implements Initializable {
         roomUsageController.setMainApp(mainapp);
         incomeController.setMainApp(mainapp);
         guestDataController.setMainApp(mainapp);
+        roomsReportController.setMainApp(mainapp);
     }
     
 }

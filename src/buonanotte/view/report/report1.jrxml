@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f2bfec3a-5916-4d85-b104-b8f0fcfb0dac">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString language="SQL">
+		<![CDATA[select r.roomno as RoomNo, rt.id as TypeID, rt.roomtype as Type, rt.price as Price, bills.total as TotalBills
+from rooms r, roomtypes rt, 
+(select roomid, sum(totalbill) as total from orders group by roomid) as bills
+where rt.id = r.typeid and r.roomno = bills.roomid;]]>
+	</queryString>
+	<field name="roomno" class="java.lang.Integer"/>
+	<field name="typeid" class="java.lang.Integer"/>
+	<field name="type" class="java.lang.String"/>
+	<field name="price" class="java.math.BigDecimal"/>
+	<field name="totalbills" class="java.math.BigDecimal"/>
+	<group name="roomno">
+		<groupExpression><![CDATA[$F{roomno}]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<textField>
+					<reportElement style="SubTitle" x="47" y="13" width="506" height="24" forecolor="#CC0000" uuid="317d98c5-c96d-4435-a30a-ea4a92ac68e4"/>
+					<textElement>
+						<font fontName="Chalkboard" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{roomno}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="13" width="263" height="33" uuid="464ff8eb-6875-477f-9b47-76d922cce56e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier" size="22" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Нийт өрөөний тайлан]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="117" y="46" width="157" height="22" uuid="2b92a41c-1189-4cda-a419-886225dc506c"/>
+				<textElement>
+					<font size="16" isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[REP-101]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="b9979c7c-2518-4ff7-a4e9-647aec4818e4"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="19" width="138" height="15" uuid="0fa19406-f94a-4449-b114-17552eb22977"/>
+				<text><![CDATA[typeid]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="138" y="19" width="138" height="15" uuid="8d9b82f1-2f69-42d5-853f-9988dc3adb6c"/>
+				<text><![CDATA[type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="276" y="19" width="138" height="15" uuid="c42ee724-09c2-4e90-9622-ef5b84bffde1"/>
+				<text><![CDATA[price]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="414" y="19" width="138" height="15" uuid="aef19a1b-0bc7-4880-9cf7-8323b5107231"/>
+				<text><![CDATA[totalbills]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="fb622a9d-525a-433b-88cd-433729932909"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="0" y="0" width="138" height="15" uuid="e7cdc876-5f13-41eb-a3d2-0a4989ee6d83"/>
+				<textFieldExpression><![CDATA[$F{typeid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="138" y="0" width="138" height="15" uuid="e3bc66c6-0375-4a38-807f-8122774ebf0d"/>
+				<textFieldExpression><![CDATA[$F{type}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="276" y="0" width="138" height="15" uuid="6d0ade35-777c-4549-ace6-ca89b4308cdf"/>
+				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="414" y="0" width="138" height="15" uuid="fde62346-82c4-4626-b2e3-06397644c333"/>
+				<textFieldExpression><![CDATA[$F{totalbills}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="de69f047-2251-4cc2-b00d-4f05de777624"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="a9fce9c7-33fa-4bec-a437-5222efb73c15"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="a09d751d-661c-4dff-b92b-95250a80f831"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="6103a421-3eef-4b97-b960-2290619c7556"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
