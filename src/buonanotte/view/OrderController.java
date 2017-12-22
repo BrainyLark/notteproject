@@ -420,8 +420,9 @@ public class OrderController implements Initializable {
         ResultSet rs = this.mainApp.getAdapder().query("orders,guests", "*", "orders.id=" + orderNo + " and guestid = guests.id");
         try {
             if (rs.next()) {
-                FirstNameField.setText(rs.getString("firstname"));
-                LastNameField.setText(rs.getString("lastname"));
+                String[] fullname = rs.getString("fullname").split(" ");
+                FirstNameField.setText(fullname[0]);
+                LastNameField.setText(fullname[1]);
                 RegistryField.setText(rs.getString("registerid"));
                 roomno = rs.getInt("roomid");
                 guestid = rs.getInt("guestid");

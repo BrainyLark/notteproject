@@ -64,8 +64,9 @@ public class ExitController implements Initializable {
         try {
             if (rs.next()) {
                 //user info fill
-                FirstNameLabel.setText(rs.getString("firstname"));
-                LastNameLabel.setText(rs.getString("lastname"));
+                String[] fullname = rs.getString("fullname").split(" ");
+                FirstNameLabel.setText(fullname[0]);
+                LastNameLabel.setText(fullname[1]);
                 RegistryNumberLabel.setText(rs.getString("registerid"));
                 RoomNumLabel.setText(rs.getString("roomid"));
                 RoomTypeLabel.setText(rs.getString("roomtype"));

@@ -70,13 +70,13 @@ public class RoomsInfoController implements Initializable {
         MainTilePane.getChildren().clear();
         ResultSet rs;
         if(roomtype.length() < 2){
-            rs= this.mainapp.getAdapder().query("rooms","roomNo","roomNo = roomNo");
+            rs= this.mainapp.getAdapder().query("rooms","roomno", "true");
         }else{
-            rs= this.mainapp.getAdapder().query("rooms,roomtypes","roomNo","typeid = roomtypes.id and roomtype='"+roomtype+"'");
+            rs= this.mainapp.getAdapder().query("rooms, roomtypes", "roomno","typeid = roomtypes.id and roomtype='"+roomtype+"'");
         }
         try {
             while(rs.next()) {
-                MainTilePane.getChildren().add(createElement(rs.getInt("roomNo")));
+                MainTilePane.getChildren().add(createElement(rs.getInt("roomno")));
             }
         } 
         catch (SQLException ex) {
@@ -102,7 +102,7 @@ public class RoomsInfoController implements Initializable {
         try {
             if(rs.next()) {
                 rectangle.setFill(Color.rgb(50,72,81));
-                int id = rs.getInt("orders.id");
+                int id = rs.getInt("id");
                 Text text = new Text(""+number);
                 text.setFill(Color.WHITE);
                 text.setFont(Font.font("Verdana",14));

@@ -46,11 +46,6 @@ public class BuonaNotte extends Application {
     public void start(Stage stage) throws SQLException, IOException {
 
         adapter = new DatabaseAdapter();
-        setRoomData();
-        setGuestData();
-        currentUser = null;
-        this.privateStage = stage;
-        this.privateStage.setTitle("Удирдлагын булан");
 
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Нэвтрэх хэрэглэгчийн сонголт");
@@ -59,6 +54,11 @@ public class BuonaNotte extends Application {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
             // ... user chose OK
+            setRoomData();
+            setGuestData();
+            currentUser = null;
+            this.privateStage = stage;
+            this.privateStage.setTitle("Удирдлагын булан");
             initRootLayout();
 
             FXMLLoader loader = new FXMLLoader();
@@ -72,6 +72,9 @@ public class BuonaNotte extends Application {
             adminController.setMainApp(this);
         } else {
             // ... user chose CANCEL or closed the dialog
+            setRoomData();
+            this.privateStage = stage;
+            this.privateStage.setTitle("Hotel System");
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(BuonaNotte.class.getResource("view/RoomsInfo.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
@@ -116,6 +119,7 @@ public class BuonaNotte extends Application {
             System.out.println("Error occured while retrieving room data: " + ex.getMessage());
         }
     }
+    
 
     public void setGuestData() {
         ResultSet rs = adapter.query("guests", "*", "true");
@@ -189,8 +193,8 @@ public class BuonaNotte extends Application {
         roomData.clear();
         setRoomData();
     }
-    
-    public void showExitDialog(int orderNum){
+
+    public void showExitDialog(int orderNum) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(BuonaNotte.class.getResource("view/exit.fxml"));
@@ -206,12 +210,14 @@ public class BuonaNotte extends Application {
             controller.setMainApp(this);
             controller.setDialogStage(dialogStage);
             controller.setOrder(orderNum);
-            dialogStage.setOnHiding( event -> {InfoController.setAllOrders(); InfoController.test(" ");} );
+            dialogStage.setOnHiding(event -> {
+                InfoController.setAllOrders();
+                InfoController.test(" ");
+            });
             dialogStage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
 
 }
